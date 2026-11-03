@@ -1,0 +1,252 @@
+$ make qemu-nox CPUS=1
+...
+$ pagereplace
+reference string (20 refs): 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+
+--- FIFO, 3 frames ---
+ref 7 :  7  -  -   FAULT
+ref 0 :  7  0  -   FAULT
+ref 1 :  7  0  1   FAULT
+ref 2 :  2  0  1   FAULT
+ref 0 :  2  0  1   hit
+ref 3 :  2  3  1   FAULT
+ref 0 :  2  3  0   FAULT
+ref 4 :  4  3  0   FAULT
+ref 2 :  4  2  0   FAULT
+ref 3 :  4  2  3   FAULT
+ref 0 :  0  2  3   FAULT
+ref 3 :  0  2  3   hit
+ref 2 :  0  2  3   hit
+ref 1 :  0  1  3   FAULT
+ref 2 :  0  1  2   FAULT
+ref 0 :  0  1  2   hit
+ref 1 :  0  1  2   hit
+ref 7 :  7  1  2   FAULT
+ref 0 :  7  0  2   FAULT
+ref 1 :  7  0  1   FAULT
+FIFO total page faults: 15, hits: 5
+
+--- LRU, 3 frames ---
+ref 7 :  7  -  -   FAULT
+ref 0 :  7  0  -   FAULT
+ref 1 :  7  0  1   FAULT
+ref 2 :  2  0  1   FAULT
+ref 0 :  2  0  1   hit
+ref 3 :  2  0  3   FAULT
+ref 0 :  2  0  3   hit
+ref 4 :  4  0  3   FAULT
+ref 2 :  4  0  2   FAULT
+ref 3 :  4  3  2   FAULT
+ref 0 :  0  3  2   FAULT
+ref 3 :  0  3  2   hit
+ref 2 :  0  3  2   hit
+ref 1 :  1  3  2   FAULT
+ref 2 :  1  3  2   hit
+ref 0 :  1  0  2   FAULT
+ref 1 :  1  0  2   hit
+ref 7 :  1  0  7   FAULT
+ref 0 :  1  0  7   hit
+ref 1 :  1  0  7   hit
+LRU total page faults: 12, hits: 8
+
+--- OPT, 3 frames ---
+ref 7 :  7  -  -   FAULT
+ref 0 :  7  0  -   FAULT
+ref 1 :  7  0  1   FAULT
+ref 2 :  2  0  1   FAULT
+ref 0 :  2  0  1   hit
+ref 3 :  2  0  3   FAULT
+ref 0 :  2  0  3   hit
+ref 4 :  2  4  3   FAULT
+ref 2 :  2  4  3   hit
+ref 3 :  2  4  3   hit
+ref 0 :  2  0  3   FAULT
+ref 3 :  2  0  3   hit
+ref 2 :  2  0  3   hit
+ref 1 :  2  0  1   FAULT
+ref 2 :  2  0  1   hit
+ref 0 :  2  0  1   hit
+ref 1 :  2  0  1   hit
+ref 7 :  7  0  1   FAULT
+ref 0 :  7  0  1   hit
+ref 1 :  7  0  1   hit
+OPT total page faults: 9, hits: 11
+
+frames | algo | faults | hits | hit ratio | fault ratio
+-------+------+--------+------+-----------+------------
+   3   | FIFO |   15   |   5  |  25.00%   |   75.00%
+   3   | LRU  |   12   |   8  |  40.00%   |   60.00%
+   3   | OPT  |    9   |  11  |  55.00%   |   45.00%
+   4   | FIFO |   10   |  10  |  50.00%   |   50.00%
+   4   | LRU  |    8   |  12  |  60.00%   |   40.00%
+   4   | OPT  |    8   |  12  |  60.00%   |   40.00%
+   5   | FIFO |    9   |  11  |  55.00%   |   45.00%
+   5   | LRU  |    7   |  13  |  65.00%   |   35.00%
+   5   | OPT  |    7   |  13  |  65.00%   |   35.00%
+$ pagereplace 4
+reference string (20 refs): 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+
+--- FIFO, 4 frames ---
+ref 7 :  7  -  -  -   FAULT
+ref 0 :  7  0  -  -   FAULT
+ref 1 :  7  0  1  -   FAULT
+ref 2 :  7  0  1  2   FAULT
+ref 0 :  7  0  1  2   hit
+ref 3 :  3  0  1  2   FAULT
+ref 0 :  3  0  1  2   hit
+ref 4 :  3  4  1  2   FAULT
+ref 2 :  3  4  1  2   hit
+ref 3 :  3  4  1  2   hit
+ref 0 :  3  4  0  2   FAULT
+ref 3 :  3  4  0  2   hit
+ref 2 :  3  4  0  2   hit
+ref 1 :  3  4  0  1   FAULT
+ref 2 :  2  4  0  1   FAULT
+ref 0 :  2  4  0  1   hit
+ref 1 :  2  4  0  1   hit
+ref 7 :  2  7  0  1   FAULT
+ref 0 :  2  7  0  1   hit
+ref 1 :  2  7  0  1   hit
+FIFO total page faults: 10, hits: 10
+
+--- LRU, 4 frames ---
+ref 7 :  7  -  -  -   FAULT
+ref 0 :  7  0  -  -   FAULT
+ref 1 :  7  0  1  -   FAULT
+ref 2 :  7  0  1  2   FAULT
+ref 0 :  7  0  1  2   hit
+ref 3 :  3  0  1  2   FAULT
+ref 0 :  3  0  1  2   hit
+ref 4 :  3  0  4  2   FAULT
+ref 2 :  3  0  4  2   hit
+ref 3 :  3  0  4  2   hit
+ref 0 :  3  0  4  2   hit
+ref 3 :  3  0  4  2   hit
+ref 2 :  3  0  4  2   hit
+ref 1 :  3  0  1  2   FAULT
+ref 2 :  3  0  1  2   hit
+ref 0 :  3  0  1  2   hit
+ref 1 :  3  0  1  2   hit
+ref 7 :  7  0  1  2   FAULT
+ref 0 :  7  0  1  2   hit
+ref 1 :  7  0  1  2   hit
+LRU total page faults: 8, hits: 12
+
+--- OPT, 4 frames ---
+ref 7 :  7  -  -  -   FAULT
+ref 0 :  7  0  -  -   FAULT
+ref 1 :  7  0  1  -   FAULT
+ref 2 :  7  0  1  2   FAULT
+ref 0 :  7  0  1  2   hit
+ref 3 :  3  0  1  2   FAULT
+ref 0 :  3  0  1  2   hit
+ref 4 :  3  0  4  2   FAULT
+ref 2 :  3  0  4  2   hit
+ref 3 :  3  0  4  2   hit
+ref 0 :  3  0  4  2   hit
+ref 3 :  3  0  4  2   hit
+ref 2 :  3  0  4  2   hit
+ref 1 :  1  0  4  2   FAULT
+ref 2 :  1  0  4  2   hit
+ref 0 :  1  0  4  2   hit
+ref 1 :  1  0  4  2   hit
+ref 7 :  1  0  7  2   FAULT
+ref 0 :  1  0  7  2   hit
+ref 1 :  1  0  7  2   hit
+OPT total page faults: 8, hits: 12
+
+frames | algo | faults | hits | hit ratio | fault ratio
+-------+------+--------+------+-----------+------------
+   3   | FIFO |   15   |   5  |  25.00%   |   75.00%
+   3   | LRU  |   12   |   8  |  40.00%   |   60.00%
+   3   | OPT  |    9   |  11  |  55.00%   |   45.00%
+   4   | FIFO |   10   |  10  |  50.00%   |   50.00%
+   4   | LRU  |    8   |  12  |  60.00%   |   40.00%
+   4   | OPT  |    8   |  12  |  60.00%   |   40.00%
+   5   | FIFO |    9   |  11  |  55.00%   |   45.00%
+   5   | LRU  |    7   |  13  |  65.00%   |   35.00%
+   5   | OPT  |    7   |  13  |  65.00%   |   35.00%
+$ pagereplace 5
+reference string (20 refs): 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+
+--- FIFO, 5 frames ---
+ref 7 :  7  -  -  -  -   FAULT
+ref 0 :  7  0  -  -  -   FAULT
+ref 1 :  7  0  1  -  -   FAULT
+ref 2 :  7  0  1  2  -   FAULT
+ref 0 :  7  0  1  2  -   hit
+ref 3 :  7  0  1  2  3   FAULT
+ref 0 :  7  0  1  2  3   hit
+ref 4 :  4  0  1  2  3   FAULT
+ref 2 :  4  0  1  2  3   hit
+ref 3 :  4  0  1  2  3   hit
+ref 0 :  4  0  1  2  3   hit
+ref 3 :  4  0  1  2  3   hit
+ref 2 :  4  0  1  2  3   hit
+ref 1 :  4  0  1  2  3   hit
+ref 2 :  4  0  1  2  3   hit
+ref 0 :  4  0  1  2  3   hit
+ref 1 :  4  0  1  2  3   hit
+ref 7 :  4  7  1  2  3   FAULT
+ref 0 :  4  7  0  2  3   FAULT
+ref 1 :  4  7  0  1  3   FAULT
+FIFO total page faults: 9, hits: 11
+
+--- LRU, 5 frames ---
+ref 7 :  7  -  -  -  -   FAULT
+ref 0 :  7  0  -  -  -   FAULT
+ref 1 :  7  0  1  -  -   FAULT
+ref 2 :  7  0  1  2  -   FAULT
+ref 0 :  7  0  1  2  -   hit
+ref 3 :  7  0  1  2  3   FAULT
+ref 0 :  7  0  1  2  3   hit
+ref 4 :  4  0  1  2  3   FAULT
+ref 2 :  4  0  1  2  3   hit
+ref 3 :  4  0  1  2  3   hit
+ref 0 :  4  0  1  2  3   hit
+ref 3 :  4  0  1  2  3   hit
+ref 2 :  4  0  1  2  3   hit
+ref 1 :  4  0  1  2  3   hit
+ref 2 :  4  0  1  2  3   hit
+ref 0 :  4  0  1  2  3   hit
+ref 1 :  4  0  1  2  3   hit
+ref 7 :  7  0  1  2  3   FAULT
+ref 0 :  7  0  1  2  3   hit
+ref 1 :  7  0  1  2  3   hit
+LRU total page faults: 7, hits: 13
+
+--- OPT, 5 frames ---
+ref 7 :  7  -  -  -  -   FAULT
+ref 0 :  7  0  -  -  -   FAULT
+ref 1 :  7  0  1  -  -   FAULT
+ref 2 :  7  0  1  2  -   FAULT
+ref 0 :  7  0  1  2  -   hit
+ref 3 :  7  0  1  2  3   FAULT
+ref 0 :  7  0  1  2  3   hit
+ref 4 :  4  0  1  2  3   FAULT
+ref 2 :  4  0  1  2  3   hit
+ref 3 :  4  0  1  2  3   hit
+ref 0 :  4  0  1  2  3   hit
+ref 3 :  4  0  1  2  3   hit
+ref 2 :  4  0  1  2  3   hit
+ref 1 :  4  0  1  2  3   hit
+ref 2 :  4  0  1  2  3   hit
+ref 0 :  4  0  1  2  3   hit
+ref 1 :  4  0  1  2  3   hit
+ref 7 :  7  0  1  2  3   FAULT
+ref 0 :  7  0  1  2  3   hit
+ref 1 :  7  0  1  2  3   hit
+OPT total page faults: 7, hits: 13
+
+frames | algo | faults | hits | hit ratio | fault ratio
+-------+------+--------+------+-----------+------------
+   3   | FIFO |   15   |   5  |  25.00%   |   75.00%
+   3   | LRU  |   12   |   8  |  40.00%   |   60.00%
+   3   | OPT  |    9   |  11  |  55.00%   |   45.00%
+   4   | FIFO |   10   |  10  |  50.00%   |   50.00%
+   4   | LRU  |    8   |  12  |  60.00%   |   40.00%
+   4   | OPT  |    8   |  12  |  60.00%   |   40.00%
+   5   | FIFO |    9   |  11  |  55.00%   |   45.00%
+   5   | LRU  |    7   |  13  |  65.00%   |   35.00%
+   5   | OPT  |    7   |  13  |  65.00%   |   35.00%
+$

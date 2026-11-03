@@ -1,0 +1,269 @@
+$ make qemu-nox CPUS=2
+...
+$ memtest
+=== memstats: before sbrk ===
+  total pages managed : 56999 (227996 KB)
+  total allocated     : 491
+  total freed         : 214
+  currently allocated : 211
+  available (free)    : 56788 (227152 KB)
+
+=== memstats: after sbrk(16 * 4096) at 0x3000 ===
+  total pages managed : 56999 (227996 KB)
+  total allocated     : 507
+  total freed         : 214
+  currently allocated : 227
+  available (free)    : 56772 (227088 KB)
+  -> currently allocated grew by 16 pages (expected 16)
+
+=== memstats: after sbrk(-16 * 4096) ===
+  total pages managed : 56999 (227996 KB)
+  total allocated     : 507
+  total freed         : 230
+  currently allocated : 211
+  available (free)    : 56788 (227152 KB)
+  -> currently allocated dropped by 16 pages, back to start: yes
+$ vttest
+sbrk(3 * 4096) returned 0x3000, sz now 0x6000
+
+--- valid user addresses ---
+code  main()      va 0x0 -> pa 0xDF2C000  (frame 0xDF2C000 + offset 0x0)
+stack &local      va 0x2FCC -> pa 0xDF74FCC  (frame 0xDF74000 + offset 0xFCC)
+heap  page 0      va 0x3000 -> pa 0xDEE3000  (frame 0xDEE3000 + offset 0x0)
+heap  page 0+0x123 va 0x3123 -> pa 0xDEE3123  (frame 0xDEE3000 + offset 0x123)
+heap  page 1      va 0x4000 -> pa 0xDEE1000  (frame 0xDEE1000 + offset 0x0)
+heap  page 2+0xabc va 0x5ABC -> pa 0xDF22ABC  (frame 0xDF22000 + offset 0xABC)
+
+--- invalid / unmapped addresses ---
+just above sz     va 0x6000 -> INVALID (no present PTE)
+no page table     va 0x40000000 -> INVALID (no present PTE)
+freed heap page 2 va 0x5000 -> INVALID (no present PTE)
+
+--- kernel half (present, but PTE_U clear) ---
+KERNBASE+0x100000 va 0x80100000 -> pa 0x100000  (frame 0x100000 + offset 0x0)
+$ pagetest
+allocated one page at 0x3000, wrote 'A'
+
+--- before setreadonly ---
+pageinfo: va 0x3000 -> pte 0xdf2b067  frame 57131 (pa 0xdf2b000)  flags P=1 W=1 U=1
+
+--- after setreadonly(0x3000) ---
+pageinfo: va 0x3000 -> pte 0xdf2b065  frame 57131 (pa 0xdf2b000)  flags P=1 W=0 U=1
+reading still works: p[0] = 'A'
+
+--- error cases ---
+pageinfo: va 0x40000000 is not mapped
+pageinfo(0x40000000)      = -1
+setreadonly(0x40000000)   = -1 (unmapped)
+setreadonly(0x80100000)   = -1 (kernel page, refused)
+
+--- writing to the read-only page (in a child) ---
+child 6: writing 'B' to 0x3000 ...
+pid 6 pagetest: trap 14 err 7 on cpu 0 eip 0x11d addr 0x3000--kill proc
+parent: child 6 was killed by the page fault, p[0] still 'A'
+$ pagereplace
+reference string (20 refs): 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+
+--- FIFO, 3 frames ---
+ref 7 :  7  -  -   FAULT
+ref 0 :  7  0  -   FAULT
+ref 1 :  7  0  1   FAULT
+ref 2 :  2  0  1   FAULT
+ref 0 :  2  0  1   hit
+ref 3 :  2  3  1   FAULT
+ref 0 :  2  3  0   FAULT
+ref 4 :  4  3  0   FAULT
+ref 2 :  4  2  0   FAULT
+ref 3 :  4  2  3   FAULT
+ref 0 :  0  2  3   FAULT
+ref 3 :  0  2  3   hit
+ref 2 :  0  2  3   hit
+ref 1 :  0  1  3   FAULT
+ref 2 :  0  1  2   FAULT
+ref 0 :  0  1  2   hit
+ref 1 :  0  1  2   hit
+ref 7 :  7  1  2   FAULT
+ref 0 :  7  0  2   FAULT
+ref 1 :  7  0  1   FAULT
+FIFO total page faults: 15, hits: 5
+
+--- LRU, 3 frames ---
+ref 7 :  7  -  -   FAULT
+ref 0 :  7  0  -   FAULT
+ref 1 :  7  0  1   FAULT
+ref 2 :  2  0  1   FAULT
+ref 0 :  2  0  1   hit
+ref 3 :  2  0  3   FAULT
+ref 0 :  2  0  3   hit
+ref 4 :  4  0  3   FAULT
+ref 2 :  4  0  2   FAULT
+ref 3 :  4  3  2   FAULT
+ref 0 :  0  3  2   FAULT
+ref 3 :  0  3  2   hit
+ref 2 :  0  3  2   hit
+ref 1 :  1  3  2   FAULT
+ref 2 :  1  3  2   hit
+ref 0 :  1  0  2   FAULT
+ref 1 :  1  0  2   hit
+ref 7 :  1  0  7   FAULT
+ref 0 :  1  0  7   hit
+ref 1 :  1  0  7   hit
+LRU total page faults: 12, hits: 8
+
+--- OPT, 3 frames ---
+ref 7 :  7  -  -   FAULT
+ref 0 :  7  0  -   FAULT
+ref 1 :  7  0  1   FAULT
+ref 2 :  2  0  1   FAULT
+ref 0 :  2  0  1   hit
+ref 3 :  2  0  3   FAULT
+ref 0 :  2  0  3   hit
+ref 4 :  2  4  3   FAULT
+ref 2 :  2  4  3   hit
+ref 3 :  2  4  3   hit
+ref 0 :  2  0  3   FAULT
+ref 3 :  2  0  3   hit
+ref 2 :  2  0  3   hit
+ref 1 :  2  0  1   FAULT
+ref 2 :  2  0  1   hit
+ref 0 :  2  0  1   hit
+ref 1 :  2  0  1   hit
+ref 7 :  7  0  1   FAULT
+ref 0 :  7  0  1   hit
+ref 1 :  7  0  1   hit
+OPT total page faults: 9, hits: 11
+
+frames | algo | faults | hits | hit ratio | fault ratio
+-------+------+--------+------+-----------+------------
+   3   | FIFO |   15   |   5  |  25.00%   |   75.00%
+   3   | LRU  |   12   |   8  |  40.00%   |   60.00%
+   3   | OPT  |    9   |  11  |  55.00%   |   45.00%
+   4   | FIFO |   10   |  10  |  50.00%   |   50.00%
+   4   | LRU  |    8   |  12  |  60.00%   |   40.00%
+   4   | OPT  |    8   |  12  |  60.00%   |   40.00%
+   5   | FIFO |    9   |  11  |  55.00%   |   45.00%
+   5   | LRU  |    7   |  13  |  65.00%   |   35.00%
+   5   | OPT  |    7   |  13  |  65.00%   |   35.00%
+$ usertests
+usertests starting
+arg test passed
+createdelete test
+createdelete ok
+linkunlink test
+linkunlink ok
+concreate test
+concreate ok
+fourfiles test
+fourfiles ok
+sharedfd test
+sharedfd ok
+bigarg test
+bigarg test ok
+bigwrite test
+bigwrite ok
+bigarg test
+bigarg test ok
+bss test
+bss test ok
+sbrk test
+pid 102 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80000000--kill proc
+pid 103 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8000c350--kill proc
+pid 104 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800186a0--kill proc
+pid 105 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800249f0--kill proc
+pid 106 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80030d40--kill proc
+pid 107 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8003d090--kill proc
+pid 108 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800493e0--kill proc
+pid 109 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80055730--kill proc
+pid 110 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80061a80--kill proc
+pid 111 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x8006ddd0--kill proc
+pid 112 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x8007a120--kill proc
+pid 113 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x80086470--kill proc
+pid 114 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x800927c0--kill proc
+pid 115 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x8009eb10--kill proc
+pid 116 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x800aae60--kill proc
+pid 117 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x800b71b0--kill proc
+pid 118 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800c3500--kill proc
+pid 119 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800cf850--kill proc
+pid 120 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800dbba0--kill proc
+pid 121 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800e7ef0--kill proc
+pid 122 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800f4240--kill proc
+pid 123 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80100590--kill proc
+pid 124 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x8010c8e0--kill proc
+pid 125 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x80118c30--kill proc
+pid 126 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x80124f80--kill proc
+pid 127 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x801312d0--kill proc
+pid 128 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x8013d620--kill proc
+pid 129 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x80149970--kill proc
+pid 130 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x80155cc0--kill proc
+pid 131 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x80162010--kill proc
+pid 132 usertests: trap 14 err 5 on cpu 0 eip 0x3077 addr 0x8016e360--kill proc
+pid 133 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8017a6b0--kill proc
+pid 134 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80186a00--kill proc
+pid 135 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80192d50--kill proc
+pid 136 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8019f0a0--kill proc
+pid 137 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801ab3f0--kill proc
+pid 138 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801b7740--kill proc
+pid 139 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801c3a90--kill proc
+pid 140 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801cfde0--kill proc
+pid 141 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801dc130--kill proc
+allocuvm out of memory
+allocuvm out of memory
+allocuvm out of memory
+allocuvm out of memory
+allocuvm out of memory
+allocuvm out of memory
+allocuvm out of memory
+allocuvm out of memory
+sbrk test OK
+validate test
+validate ok
+open test
+open test ok
+small file test
+creat small succeeded; ok
+writes ok
+open small succeeded ok
+read succeeded ok
+small file test ok
+big files test
+big files ok
+many creates, followed by unlink test
+many creates, followed by unlink; ok
+openiput test
+openiput test ok
+exitiput test
+exitiput test ok
+iput test
+iput test ok
+mem test
+allocuvm out of memory
+mem ok
+pipe1 ok
+preempt: kill... wait... preempt ok
+exitwait ok
+rmdot test
+rmdot ok
+fourteen test
+fourteen ok
+bigfile test
+bigfile test ok
+subdir test
+subdir ok
+linktest
+linktest ok
+unlinkread test
+unlinkread ok
+dir vs file
+dir vs file OK
+empty file name
+empty file name OK
+fork test
+fork test OK
+bigdir test
+bigdir ok
+uio test
+pid 596 usertests: trap 13 err 0 on cpu 1 eip 0x35e3 addr 0x801dc130--kill proc
+uio test done
+exec test
+ALL TESTS PASSED
+$

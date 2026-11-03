@@ -1,0 +1,25 @@
+$ make qemu-nox CPUS=1
+...
+$ memtest
+=== memstats: before sbrk ===
+  total pages managed : 57000 (228000 KB)
+  total allocated     : 490
+  total freed         : 214
+  currently allocated : 211
+  available (free)    : 56789 (227156 KB)
+
+=== memstats: after sbrk(16 * 4096) at 0x3000 ===
+  total pages managed : 57000 (228000 KB)
+  total allocated     : 506
+  total freed         : 214
+  currently allocated : 227
+  available (free)    : 56773 (227092 KB)
+  -> currently allocated grew by 16 pages (expected 16)
+
+=== memstats: after sbrk(-16 * 4096) ===
+  total pages managed : 57000 (228000 KB)
+  total allocated     : 506
+  total freed         : 230
+  currently allocated : 211
+  available (free)    : 56789 (227156 KB)
+  -> currently allocated dropped by 16 pages, back to start: yes

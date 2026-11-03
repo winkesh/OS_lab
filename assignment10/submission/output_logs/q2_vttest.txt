@@ -1,0 +1,20 @@
+$ make qemu-nox CPUS=1
+...
+$ vttest
+sbrk(3 * 4096) returned 0x3000, sz now 0x6000
+
+--- valid user addresses ---
+code  main()      va 0x0 -> pa 0xDF2C000  (frame 0xDF2C000 + offset 0x0)
+stack &local      va 0x2FCC -> pa 0xDF74FCC  (frame 0xDF74000 + offset 0xFCC)
+heap  page 0      va 0x3000 -> pa 0xDEE3000  (frame 0xDEE3000 + offset 0x0)
+heap  page 0+0x123 va 0x3123 -> pa 0xDEE3123  (frame 0xDEE3000 + offset 0x123)
+heap  page 1      va 0x4000 -> pa 0xDEE1000  (frame 0xDEE1000 + offset 0x0)
+heap  page 2+0xabc va 0x5ABC -> pa 0xDF22ABC  (frame 0xDF22000 + offset 0xABC)
+
+--- invalid / unmapped addresses ---
+just above sz     va 0x6000 -> INVALID (no present PTE)
+no page table     va 0x40000000 -> INVALID (no present PTE)
+freed heap page 2 va 0x5000 -> INVALID (no present PTE)
+
+--- kernel half (present, but PTE_U clear) ---
+KERNBASE+0x100000 va 0x80100000 -> pa 0x100000  (frame 0x100000 + offset 0x0)
