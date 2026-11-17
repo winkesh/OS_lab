@@ -21,4 +21,4 @@ Swap `assignment4` for the one you want. Some differences between them:
 - **A1:** `chmod +x *.sh`, then run the scripts.
 - **A2:** `make`, then run the binaries.
 
-Each assignment's `REPORT.md` has the exact run commands.
+The `REPORT.md` (A5: `README.md`) in each submission has the exact run commands. A1 and A6 have no report; their scripts and programs run as described above.
