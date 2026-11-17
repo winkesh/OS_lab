@@ -1,0 +1,18 @@
+$ gcc runcmd.c -o runcmd
+$ ./runcmd echo hello
+hello
+Command successfully completed
+$ ./runcmd ls
+Incorrect number of arguments
+Usage: ./runcmd <command> <argument>
+$ ./runcmd sleep 2
+Command successfully completed
+$ ./runcmd ls demo
+a.txt  b.c  sub
+Command successfully completed
+$ ./runcmd ls /nonexistent
+ls: cannot access '/nonexistent': No such file or directory
+Command failed with exit status 2
+$ ./runcmd nosuchcmd arg
+execlp: No such file or directory
+Command failed with exit status 127

@@ -1,0 +1,6 @@
+fork_nowait
+fork_wait
+exec_l
+exec_lp
+exec_vp
+runcmd

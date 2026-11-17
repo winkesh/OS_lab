@@ -1,0 +1,21 @@
+$ make fork_nowait fork_wait
+gcc -Wall -Wextra -o fork_nowait fork_nowait.c
+gcc -Wall -Wextra -o fork_wait fork_wait.c
+$ ./fork_nowait
+I am parent, PID = 19333
+I am child, PID = 19334
+$ ./fork_nowait
+I am parent, PID = 19335
+I am child, PID = 19336
+$ ./fork_nowait
+I am parent, PID = 19337
+I am child, PID = 19338
+$ ./fork_wait
+I am child, PID = 19340
+I am parent, PID = 19339 (reaped child 19340, exit status 0)
+$ ./fork_wait
+I am child, PID = 19342
+I am parent, PID = 19341 (reaped child 19342, exit status 0)
+$ ./fork_wait
+I am child, PID = 19344
+I am parent, PID = 19343 (reaped child 19344, exit status 0)

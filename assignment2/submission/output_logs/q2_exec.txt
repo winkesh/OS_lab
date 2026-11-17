@@ -1,0 +1,26 @@
+$ make exec_l exec_lp exec_vp
+gcc -Wall -Wextra -o exec_l exec_l.c
+gcc -Wall -Wextra -o exec_lp exec_lp.c
+gcc -Wall -Wextra -o exec_vp exec_vp.c
+$ cd demo
+$ ls -l
+total 8
+-rw-rw-r-- 1 aditmohanty aditmohanty    3 Nov 17 11:52 a.txt
+-rw-rw-r-- 1 aditmohanty aditmohanty    0 Nov 17 11:52 b.c
+drwxrwxr-x 2 aditmohanty aditmohanty 4096 Nov 17 11:52 sub
+$ ../exec_l
+total 8
+-rw-rw-r-- 1 aditmohanty aditmohanty    3 Nov 17 11:52 a.txt
+-rw-rw-r-- 1 aditmohanty aditmohanty    0 Nov 17 11:52 b.c
+drwxrwxr-x 2 aditmohanty aditmohanty 4096 Nov 17 11:52 sub
+$ ../exec_lp
+total 8
+-rw-rw-r-- 1 aditmohanty aditmohanty    3 Nov 17 11:52 a.txt
+-rw-rw-r-- 1 aditmohanty aditmohanty    0 Nov 17 11:52 b.c
+drwxrwxr-x 2 aditmohanty aditmohanty 4096 Nov 17 11:52 sub
+$ ../exec_vp
+total 8
+-rw-rw-r-- 1 aditmohanty aditmohanty    3 Nov 17 11:52 a.txt
+-rw-rw-r-- 1 aditmohanty aditmohanty    0 Nov 17 11:52 b.c
+drwxrwxr-x 2 aditmohanty aditmohanty 4096 Nov 17 11:52 sub
+$ cd ..
