@@ -1,0 +1,15 @@
+$ make clean && make qemu-nox SCHED=SJF CPUS=1
+...
+$ sjftest
+sjftest: 4 CPU-bound children declare bursts A=40 B=10 C=30 D=20 ticks
+with set_burst() right after fork, then wait at a start barrier so all
+four are ready together. SJF must finish them in order B, D, C, A.
+
+parent: set_burst rejects a negative burst as expected
+parent: all children have declared their bursts, releasing them at tick 17
+  child B pid 5 burst 10 finished: ready 17, first ran 17, done 27, turnaround 10
+  child D pid 7 burst 20 finished: ready 17, first ran 27, done 47, turnaround 30
+  child C pid 6 burst 30 finished: ready 17, first ran 47, done 76, turnaround 59
+  child A pid 4 burst 40 finished: ready 17, first ran 77, done 116, turnaround 99
+
+completion order: 1. B (burst 10) 2. D (burst 20) 3. C (burst 30) 4. A (burst 40)

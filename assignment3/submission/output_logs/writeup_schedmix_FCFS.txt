@@ -1,0 +1,17 @@
+$ make clean && make qemu-nox SCHED=FCFS CPUS=1
+...
+$ schedmix cpu
+workload 'cpu', all jobs ready at tick 16
+order job        burst prio response turnaround
+  1   long-cpu   60    9    0        63
+  2   mid-cpu    30    6    63       92
+  3   short-cpu  10    3    92       102
+average response 51.6 ticks, average turnaround 85.6 ticks
+$ schedmix mix
+workload 'mix', all jobs ready at tick 131
+order job        burst prio response turnaround
+  1   long-cpu   60    9    0        57
+  2   mid-cpu    30    6    57       86
+  3   short-cpu  10    3    86       95
+  4   io-bound   1     1    96       132
+average response 59.7 ticks, average turnaround 92.5 ticks

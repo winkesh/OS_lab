@@ -1,0 +1,28 @@
+$ make clean && make qemu-nox SCHED=RR CPUS=1
+...
+$ fcfstest
+fcfstest: 3 CPU-bound children created one after another.
+A is created first with the most work (~60 ticks), C last with the least (~20).
+FCFS must finish them in creation order A, B, C.
+
+parent: created child A pid 4 at tick 13 (work ~60 ticks)
+parent: created child B pid 5 at tick 21 (work ~40 ticks)
+parent: created child C pid 6 at tick 30 (work ~20 ticks)
+  child C pid 6 finished: created 30, first ran 33, done 90, turnaround 60
+  child B pid 5 finished: created 21, first ran 23, done 122, turnaround 101
+  child A pid 4 finished: created 13, first ran 14, done 138, turnaround 125
+
+completion order: 1. C (pid 6) 2. B (pid 5) 3. A (pid 4)
+$ sjftest
+sjftest: 4 CPU-bound children declare bursts A=40 B=10 C=30 D=20 ticks
+with set_burst() right after fork, then wait at a start barrier so all
+four are ready together. SJF must finish them in order B, D, C, A.
+
+parent: set_burst rejects a negative burst as expected
+parent: all children have declared their bursts, releasing them at tick 153
+  child B pid 9 burst 10 finished: ready 153, first ran 154, done 190, turnaround 37
+  child D pid 11 burst 20 finished: ready 153, first ran 156, done 222, turnaround 69
+  child C pid 10 burst 30 finished: ready 153, first ran 155, done 242, turnaround 89
+  child A pid 8 burst 40 finished: ready 153, first ran 153, done 254, turnaround 101
+
+completion order: 1. B (burst 10) 2. D (burst 20) 3. C (burst 30) 4. A (burst 40)

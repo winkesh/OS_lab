@@ -1,0 +1,15 @@
+$ make clean && make qemu-nox SCHED=FCFS CPUS=1
+...
+$ fcfstest
+fcfstest: 3 CPU-bound children created one after another.
+A is created first with the most work (~60 ticks), C last with the least (~20).
+FCFS must finish them in creation order A, B, C.
+
+parent: created child A pid 4 at tick 14 (work ~60 ticks)
+parent: created child B pid 5 at tick 17 (work ~40 ticks)
+parent: created child C pid 6 at tick 20 (work ~20 ticks)
+  child A pid 4 finished: created 14, first ran 21, done 79, turnaround 65
+  child B pid 5 finished: created 17, first ran 80, done 119, turnaround 102
+  child C pid 6 finished: created 20, first ran 120, done 139, turnaround 119
+
+completion order: 1. A (pid 4) 2. B (pid 5) 3. C (pid 6)
