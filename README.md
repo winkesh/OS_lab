@@ -2,6 +2,44 @@
 
 Operating Systems lab assignments 1–10. Each assignment folder holds the assignment PDF and the submission.
 
+## Installation and setup
+
+### 1. Toolchain (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install -y git build-essential gcc-multilib qemu-system-x86
+```
+
+`gcc-multilib` is needed because xv6 is built as 32-bit x86 (`-m32`). `qemu-system-x86` provides `qemu-system-i386`, which `make qemu-nox` runs. A1 only needs `bash` and `bc`; A2 and A6 only need `gcc` and `make`.
+
+### 2. Google Antigravity CLI (`agy`)
+
+```bash
+curl -fsSL https://antigravity.google/cli/install.sh | bash
+export PATH="$HOME/.local/bin:$PATH"     # add this line to ~/.bashrc if agy is "command not found"
+agy --version
+```
+
+There is no separate login command: the first prompt that needs the model opens a browser to sign in with your Google account. Over SSH it prints a URL instead; paste the code back within ~30 seconds.
+
+```bash
+agy -p "say hi"
+```
+
+If you see `Illegal instruction (core dumped)` inside a VM, set the VM's CPU type to `host` and cold-boot it.
+
+### 3. Get the repo and point agy at it
+
+```bash
+git clone git@github.com:winkesh/OS_lab.git
+git clone https://github.com/mit-pdos/xv6-public.git xv6-clean
+cd OS_lab
+agy --add-dir . -p "Read README.md and assignment4/submission/REPORT.md, then explain how to build and run assignment 4"
+```
+
+Without `--add-dir`, agy works in its own scratch folder instead of the repo. Don't use `--dangerously-skip-permissions` outside a throwaway directory or VM.
+
 ## Replicating an assignment
 
 A1, A2 and A6 work straight from the clone, since they're plain scripts and C programs. The xv6 ones (A3, A4, A5, A7–A10) only contain the files that were changed, so you also need a stock xv6 to drop them into:
