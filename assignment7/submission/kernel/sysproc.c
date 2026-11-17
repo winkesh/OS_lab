@@ -90,14 +90,6 @@ sys_uptime(void)
   return xticks;
 }
 
-void* shm_get_addr(void);
-
-int
-sys_shm_get(void)
-{
-  return (int)shm_get_addr();
-}
-
 int
 sys_sem_init(void)
 {

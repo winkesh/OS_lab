@@ -37,7 +37,6 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
-int shm_get(void);
 int sem_init(int, int);
 int sem_wait(int);
 int sem_signal(int);
