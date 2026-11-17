@@ -1,0 +1,258 @@
+$ make clean && make qemu-nox SCHED=MLFQ CPUS=2
+...
+$ usertests
+[mlfq] tick 11: pid 2 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 12: pid 3 used its 1-tick slice, queue 0 -> 1
+usertests starting
+arg test passed
+createdelete test
+[mlfq] tick 16: pid 3 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 17: pid 4 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 18: pid 5 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 52: pid 6 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 53: pid 7 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 63: pid 7 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 70: pid 6 used its 2-tick slice, queue 1 -> 2
+createdelete ok
+linkunlink test
+[mlfq] tick 174: pid 8 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 219: pid 8 used its 2-tick slice, queue 1 -> 2
+linkunlink ok
+concreate test
+[mlfq] tick 242: pid 10 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 243: pid 11 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 246: pid 12 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 250: pid 13 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 253: pid 14 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 257: pid 15 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 259: pid 16 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 260: pid 16 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 264: pid 17 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 268: pid 19 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 271: pid 20 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 273: pid 21 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 275: pid 22 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 278: pid 23 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 281: pid 25 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 285: pid 26 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 289: pid 27 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 290: pid 28 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 296: pid 29 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 300: pid 30 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 303: pid 31 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 308: pid 32 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 314: pid 34 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 316: pid 34 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 322: pid 35 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 325: pid 36 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 327: pid 37 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 328: pid 37 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 332: pid 38 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 339: pid 40 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 340: pid 41 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 345: pid 42 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 347: pid 43 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 348: pid 43 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 353: pid 44 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 357: pid 45 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 359: pid 46 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 360: pid 46 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 365: pid 47 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 369: pid 48 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 372: pid 49 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 381: pid 51 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 385: pid 52 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 393: pid 53 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 394: pid 54 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 399: pid 55 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 409: pid 57 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 421: pid 59 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 428: pid 61 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 433: pid 62 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 440: pid 63 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 448: pid 65 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 453: pid 66 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 457: pid 67 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 461: pid 68 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 466: pid 69 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 472: pid 70 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 475: pid 71 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 478: pid 72 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 482: pid 73 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 484: pid 74 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 490: pid 75 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 492: pid 76 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 499: pid 77 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 502: pid 78 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 506: pid 79 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 511: pid 80 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 517: pid 81 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 520: pid 82 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 525: pid 83 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 530: pid 84 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 536: pid 85 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 542: pid 86 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 548: pid 87 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 551: pid 88 used its 1-tick slice, queue 0 -> 1
+concreate ok
+fourfiles test
+[mlfq] tick 558: pid 89 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 559: pid 89 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 560: pid 90 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 564: pid 91 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 573: pid 92 used its 1-tick slice, queue 0 -> 1
+fourfiles ok
+sharedfd test
+[mlfq] tick 584: pid 93 used its 1-tick slice, queue 0 -> 1
+sharedfd ok
+b[mlfq] tick 670: pid 94 used its 1-tick slice, queue 0 -> 1
+igarg test
+bigarg test ok
+bigwrite test
+bigwrite ok
+bigarg tes[mlfq] tick 728: pid 95 used its 1-tick slice, queue 0 -> 1
+t
+bigarg test ok
+bss test
+bss test ok
+sbrk test
+pid 97 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80000000--kill proc
+pid 98 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8000c350--kill proc
+pid 99 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800186a0--kill proc
+pid 100 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800249f0--kill proc
+pid 101 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80030d40--kill proc
+pid 102 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8003d090--kill proc
+pid 103 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800493e0--kill proc
+pid 104 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80055730--kill proc
+pid 105 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80061a80--kill proc
+pid 106 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8006ddd0--kill proc
+pid 107 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8007a120--kill proc
+pid 108 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80086470--kill proc
+pid 109 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800927c0--kill proc
+pid 110 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8009eb10--kill proc
+pid 111 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800aae60--kill proc
+pid 112 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800b71b0--kill proc
+pid 113 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800c3500--kill proc
+pid 114 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800cf850--kill proc
+pid 115 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800dbba0--kill proc
+pid 116 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800e7ef0--kill proc
+pid 117 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x800f4240--kill proc
+pid 118 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80100590--kill proc
+pid 119 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8010c8e0--kill proc
+pid 120 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80118c30--kill proc
+pid 121 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80124f80--kill proc
+pid 122 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801312d0--kill proc
+pid 123 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8013d620--kill proc
+pid 124 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80149970--kill proc
+pid 125 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80155cc0--kill proc
+pid 126 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80162010--kill proc
+pid 127 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8016e360--kill proc
+pid 128 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8017a6b0--kill proc
+pid 129 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80186a00--kill proc
+pid 130 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x80192d50--kill proc
+pid 131 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x8019f0a0--kill proc
+pid 132 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801ab3f0--kill proc
+pid 133 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801b7740--kill proc
+pid 134 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801c3a90--kill proc
+pid 135 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801cfde0--kill proc
+pid 136 usertests: trap 14 err 5 on cpu 1 eip 0x3077 addr 0x801dc130--kill proc
+[mlfq] tick 827: pid 137 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 829: pid 137 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 849: pid 138 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 850: pid 138 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 867: pid 139 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 868: pid 139 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 874: pid 140 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 876: pid 140 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 883: pid 141 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 885: pid 141 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 892: pid 142 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 894: pid 142 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 902: pid 143 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 903: pid 143 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 911: pid 144 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 912: pid 144 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 922: pid 145 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 924: pid 145 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+[mlfq] tick 932: pid 146 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 933: pid 146 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+sbrk test OK
+validate test
+[mlfq] tick 954: pid 159 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 978: pid 242 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 991: pid 300 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 1007: pid 355 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 1012: pid 371 used its 1-tick slice, queue 0 -> 1
+validate ok
+open test
+open test ok
+small file test
+creat small succeeded; ok
+writes ok
+open small succeeded ok
+read succeeded ok
+small file test ok
+big files test
+big files ok
+many creates, followed by unlink test
+many creates, followed by unlink; ok
+openiput test
+[mlfq] tick 1292: pid 423 used its 1-tick slice, queue 0 -> 1
+openiput test ok
+exitiput test
+[mlfq] tick 1295: pid 424 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 1297: pid 424 used its 2-tick slice, queue 1 -> 2
+exitiput test ok
+iput test
+iput test ok
+mem test
+[mlfq] tick 1306: pid 425 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 1308: pid 425 used its 2-tick slice, queue 1 -> 2
+allocuvm out of memory
+mem ok
+pipe1 ok
+preempt: [mlfq] tick 2445: pid 427 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 2445: pid 428 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 2446: pid 429 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 2447: pid 428 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 2448: pid 429 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 2449: pid 427 used its 2-tick slice, queue 1 -> 2
+kill... wait... preempt ok
+[mlfq] tick 2460: pid 452 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 2462: pid 459 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 2476: pid 506 used its 1-tick slice, queue 0 -> 1
+exitwait ok
+rmdot test
+rmdot ok
+fourteen test
+fourteen ok
+bigfile test
+bigfile test ok
+subdir test
+subdir ok
+linktest
+linktest ok
+unlinkread test
+unlinkread ok
+dir vs file
+dir vs file OK
+empty file name
+empty file name OK
+fork test
+[mlfq] tick 2664: pid 535 used its 1-tick slice, queue 0 -> 1
+fork test OK
+bigdir test
+bigdir ok
+uio test
+pid 591 usertests: trap 13 err 0 on cpu 1 eip 0x35e3 addr 0x801dc130--kill proc
+uio test done
+exec test
+ALL TESTS PASSED
