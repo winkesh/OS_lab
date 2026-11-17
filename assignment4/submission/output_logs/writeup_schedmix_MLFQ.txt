@@ -1,0 +1,65 @@
+$ make clean && make qemu-nox SCHED=MLFQ CPUS=1
+...
+$ schedmix cpu
+[mlfq] tick 9: pid 3 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 15: pid 4 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 16: pid 5 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 17: pid 6 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 19: pid 4 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 21: pid 5 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 23: pid 6 used its 2-tick slice, queue 1 -> 2
+workload 'cpu'
+order job        burst arrived response turnaround
+  1   short-cpu  10    14      2        31
+  2   mid-cpu    30    14      1        68
+  3   long-cpu   60    14      0        96
+average response 1.0 ticks, average turnaround 65.0 ticks
+[mlfq] tick 137: pid 2 used its 1-tick slice, queue 0 -> 1
+$ schedmix mix
+[mlfq] tick 143: pid 7 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 149: pid 8 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 150: pid 9 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 151: pid 10 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 153: pid 8 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 155: pid 9 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 157: pid 10 used its 2-tick slice, queue 1 -> 2
+workload 'mix'
+order job        burst arrived response turnaround
+  1   short-cpu  10    148     2        38
+  2   io-bound   1     148     3        54
+  3   mid-cpu    30    148     1        69
+  4   long-cpu   60    148     0        102
+average response 1.5 ticks, average turnaround 65.7 ticks
+$ schedmix stream
+[mlfq] tick 280: pid 12 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 281: pid 13 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 282: pid 14 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 284: pid 13 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 286: pid 14 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 295: pid 15 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 297: pid 15 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 305: pid 16 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 307: pid 16 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 316: pid 17 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 318: pid 17 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 329: pid 18 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 331: pid 18 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 340: pid 19 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 342: pid 19 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 353: pid 20 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 355: pid 20 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 364: pid 21 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 366: pid 21 used its 2-tick slice, queue 1 -> 2
+workload 'stream'
+order job        burst arrived response turnaround
+  1   short-cpu  10    281     0        19
+  2   short-cpu  10    294     0        27
+  3   short-cpu  10    304     0        20
+  4   short-cpu  10    315     0        30
+  5   short-cpu  10    328     0        20
+  6   short-cpu  10    339     0        30
+  7   short-cpu  10    352     0        20
+  8   short-cpu  10    363     0        20
+  9   long-cpu   60    280     0        139
+average response 0.0 ticks, average turnaround 36.1 ticks
+long-cpu finished 9 of 9, 0 short jobs finished after it

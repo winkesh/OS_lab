@@ -221,7 +221,7 @@ index 0000000..c4d3839
 +  exit();
 +}
 diff --git a/proc.c b/proc.c
-index 806b1b1..62abdf8 100644
+index 806b1b1..d3f4c7c 100644
 --- a/proc.c
 +++ b/proc.c
 @@ -88,6 +88,10 @@ allocproc(void)
@@ -235,7 +235,7 @@ index 806b1b1..62abdf8 100644
  
    release(&ptable.lock);
  
-@@ -319,6 +323,65 @@ wait(void)
+@@ -319,6 +323,78 @@ wait(void)
  //  - swtch to start running that process
  //  - eventually that process transfers control
  //      via swtch back to the scheduler.
@@ -272,24 +272,37 @@ index 806b1b1..62abdf8 100644
 +    if(pb < bb || (pb == bb && p->ctime < best->ctime))
 +      best = p;
 +  }
++#elif defined(SCHED_PRIORITY)
++  // A3 Q2: find the best (lowest) priority number among RUNNABLE processes,
++  // then take the first process with that priority after the one picked
++  // last time at that priority. Each priority level keeps its own
++  // round-robin cursor, so ties rotate fairly even when processes of other
++  // priorities are picked in between.
++  static int next[21];
++  int i, best_prio = 21;
++  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
++    if(p->state == RUNNABLE && p->priority < best_prio)
++      best_prio = p->priority;
++  if(best_prio == 21)
++    return 0;
++  for(i = 0; i < NPROC; i++){
++    p = &ptable.proc[(next[best_prio] + i) % NPROC];
++    if(p->state == RUNNABLE && p->priority == best_prio){
++      best = p;
++      break;
++    }
++  }
++  next[best_prio] = (best - ptable.proc + 1) % NPROC;
 +#else
-+  // Round-robin start point, shared by RR and PRIORITY: scanning starts one
-+  // slot after the last process picked, so equal candidates take turns.
++  // Round-robin: first RUNNABLE process after the one picked last time.
 +  static int next = 0;
 +  int i;
 +  for(i = 0; i < NPROC; i++){
 +    p = &ptable.proc[(next + i) % NPROC];
-+    if(p->state != RUNNABLE)
-+      continue;
-+#if defined(SCHED_PRIORITY)
-+    // A3 Q2: lowest priority number wins; the first one found after the
-+    // round-robin start point wins a tie.
-+    if(best == 0 || p->priority < best->priority)
++    if(p->state == RUNNABLE){
 +      best = p;
-+#else
-+    best = p;
-+    break;
-+#endif
++      break;
++    }
 +  }
 +  if(best)
 +    next = (best - ptable.proc + 1) % NPROC;
@@ -301,7 +314,7 @@ index 806b1b1..62abdf8 100644
  void
  scheduler(void)
  {
-@@ -330,11 +393,11 @@ scheduler(void)
+@@ -330,11 +406,11 @@ scheduler(void)
      // Enable interrupts on this processor.
      sti();
  
@@ -317,7 +330,7 @@ index 806b1b1..62abdf8 100644
  
        // Switch to chosen process.  It is the process's job
        // to release ptable.lock and then reacquire it
-@@ -355,6 +418,74 @@ scheduler(void)
+@@ -355,6 +431,74 @@ scheduler(void)
    }
  }
  

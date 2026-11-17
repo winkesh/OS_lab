@@ -5,38 +5,38 @@ priotest: 4 CPU-bound children, same work (~200 ticks each),
 priorities A=2 B=5 C=9 D=15 (1 = highest). A RUNNABLE process that waits
 more than 30 ticks gets its priority number lowered by 1 ([aging] lines).
 
-parent: created A..D (pids 4 5 6 7) at tick 11
+parent: created A..D (pids 4 5 6 7) at tick 12
 parent: set_priority rejects 0 and 21 as expected
-  child A pid 4 (priority 2) first ran at tick 12
-[aging] tick 42: pid 5 waited 31 ticks, priority 5 -> 4
-[aging] tick 42: pid 6 waited 31 ticks, priority 9 -> 8
-[aging] tick 42: pid 7 waited 31 ticks, priority 15 -> 14
-[aging] tick 73: pid 5 waited 31 ticks, priority 4 -> 3
-[aging] tick 73: pid 6 waited 31 ticks, priority 8 -> 7
-[aging] tick 73: pid 7 waited 31 ticks, priority 14 -> 13
-[aging] tick 104: pid 5 waited 31 ticks, priority 3 -> 2
-[aging] tick 104: pid 6 waited 31 ticks, priority 7 -> 6
-[aging] tick 104: pid 7 waited 31 ticks, priority 13 -> 12
-  child B pid 5 (priority 5) first ran at tick 104
-[aging] tick 135: pid 6 waited 31 ticks, priority 6 -> 5
-[aging] tick 135: pid 7 waited 31 ticks, priority 12 -> 11
-[aging] tick 166: pid 6 waited 31 ticks, priority 5 -> 4
-[aging] tick 166: pid 7 waited 31 ticks, priority 11 -> 10
-[aging] tick 197: pid 6 waited 31 ticks, priority 4 -> 3
-[aging] tick 197: pid 7 waited 31 ticks, priority 10 -> 9
-[aging] tick 228: pid 6 waited 31 ticks, priority 3 -> 2
-[aging] tick 228: pid 7 waited 31 ticks, priority 9 -> 8
-  child C pid 6 (priority 9) first ran at tick 229
-[aging] tick 259: pid 7 waited 31 ticks, priority 8 -> 7
-[aging] tick 290: pid 7 waited 31 ticks, priority 7 -> 6
-[aging] tick 321: pid 7 waited 31 ticks, priority 6 -> 5
-[aging] tick 352: pid 7 waited 31 ticks, priority 5 -> 4
-  child A pid 4 (priority 2) finished at tick 377, turnaround 366
-[aging] tick 383: pid 7 waited 31 ticks, priority 4 -> 3
-[aging] tick 414: pid 7 waited 31 ticks, priority 3 -> 2
-  child D pid 7 (priority 15) first ran at tick 415
-  child B pid 5 (priority 5) finished at tick 629, turnaround 618
-  child C pid 6 (priority 9) finished at tick 750, turnaround 739
-  child D pid 7 (priority 15) finished at tick 816, turnaround 805
+  child A pid 4 (priority 2) first ran at tick 14
+[aging] tick 44: pid 5 waited 31 ticks, priority 5 -> 4
+[aging] tick 44: pid 6 waited 31 ticks, priority 9 -> 8
+[aging] tick 44: pid 7 waited 31 ticks, priority 15 -> 14
+[aging] tick 75: pid 5 waited 31 ticks, priority 4 -> 3
+[aging] tick 75: pid 6 waited 31 ticks, priority 8 -> 7
+[aging] tick 75: pid 7 waited 31 ticks, priority 14 -> 13
+[aging] tick 106: pid 5 waited 31 ticks, priority 3 -> 2
+[aging] tick 106: pid 6 waited 31 ticks, priority 7 -> 6
+[aging] tick 106: pid 7 waited 31 ticks, priority 13 -> 12
+  child B pid 5 (priority 5) first ran at tick 106
+[aging] tick 137: pid 6 waited 31 ticks, priority 6 -> 5
+[aging] tick 137: pid 7 waited 31 ticks, priority 12 -> 11
+[aging] tick 168: pid 6 waited 31 ticks, priority 5 -> 4
+[aging] tick 168: pid 7 waited 31 ticks, priority 11 -> 10
+[aging] tick 199: pid 6 waited 31 ticks, priority 4 -> 3
+[aging] tick 199: pid 7 waited 31 ticks, priority 10 -> 9
+[aging] tick 230: pid 6 waited 31 ticks, priority 3 -> 2
+[aging] tick 230: pid 7 waited 31 ticks, priority 9 -> 8
+  child C pid 6 (priority 9) first ran at tick 231
+[aging] tick 261: pid 7 waited 31 ticks, priority 8 -> 7
+[aging] tick 292: pid 7 waited 31 ticks, priority 7 -> 6
+[aging] tick 323: pid 7 waited 31 ticks, priority 6 -> 5
+[aging] tick 354: pid 7 waited 31 ticks, priority 5 -> 4
+[aging] tick 385: pid 7 waited 31 ticks, priority 4 -> 3
+[aging] tick 416: pid 7 waited 31 ticks, priority 3 -> 2
+  child D pid 7 (priority 15) first ran at tick 418
+  child A pid 4 (priority 2) finished at tick 455, turnaround 443
+  child B pid 5 (priority 5) finished at tick 645, turnaround 633
+  child C pid 6 (priority 9) finished at tick 770, turnaround 758
+  child D pid 7 (priority 15) finished at tick 832, turnaround 820
 
 completion order: 1. A (prio 2) 2. B (prio 5) 3. C (prio 9) 4. D (prio 15)

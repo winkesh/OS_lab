@@ -356,24 +356,37 @@ pickproc(void)
     if(pb < bb || (pb == bb && p->ctime < best->ctime))
       best = p;
   }
+#elif defined(SCHED_PRIORITY)
+  // A3 Q2: find the best (lowest) priority number among RUNNABLE processes,
+  // then take the first process with that priority after the one picked
+  // last time at that priority. Each priority level keeps its own
+  // round-robin cursor, so ties rotate fairly even when processes of other
+  // priorities are picked in between.
+  static int next[21];
+  int i, best_prio = 21;
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    if(p->state == RUNNABLE && p->priority < best_prio)
+      best_prio = p->priority;
+  if(best_prio == 21)
+    return 0;
+  for(i = 0; i < NPROC; i++){
+    p = &ptable.proc[(next[best_prio] + i) % NPROC];
+    if(p->state == RUNNABLE && p->priority == best_prio){
+      best = p;
+      break;
+    }
+  }
+  next[best_prio] = (best - ptable.proc + 1) % NPROC;
 #else
-  // Round-robin start point, shared by RR and PRIORITY: scanning starts one
-  // slot after the last process picked, so equal candidates take turns.
+  // Round-robin: first RUNNABLE process after the one picked last time.
   static int next = 0;
   int i;
   for(i = 0; i < NPROC; i++){
     p = &ptable.proc[(next + i) % NPROC];
-    if(p->state != RUNNABLE)
-      continue;
-#if defined(SCHED_PRIORITY)
-    // A3 Q2: lowest priority number wins; the first one found after the
-    // round-robin start point wins a tie.
-    if(best == 0 || p->priority < best->priority)
+    if(p->state == RUNNABLE){
       best = p;
-#else
-    best = p;
-    break;
-#endif
+      break;
+    }
   }
   if(best)
     next = (best - ptable.proc + 1) % NPROC;

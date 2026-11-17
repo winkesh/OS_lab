@@ -1,0 +1,30 @@
+$ make clean && make qemu-nox SCHED=SRTF CPUS=1
+...
+$ srtftest
+srtftest: A (burst 60) arrives first, B (burst 25) 15 ticks later,
+C (burst 6) 8 ticks after B. Each child reports when it has done
+25/50/75/100% of its work. SRTF must let B and then C cut in.
+
+parent: tick 11: A (pid 4) arrives with burst 60
+  A pid 4: first ran at tick 12 (arrived 11)
+parent: tick 27: B (pid 5) arrives with burst 25
+  B pid 5: first ran at tick 27 (arrived 27)
+  B pid 5: 25% done at tick 33
+parent: tick 35: C (pid 6) arrives with burst 6
+  C pid 6: first ran at tick 35 (arrived 35)
+  C pid 6: 25% done at tick 36
+  C pid 6: 50% done at tick 38
+  C pid 6: 75% done at tick 39
+  C pid 6: 100% done at tick 40
+  C pid 6: finished, turnaround 6
+  B pid 5: 50% done at tick 46
+  B pid 5: 75% done at tick 53
+  B pid 5: 100% done at tick 59
+  B pid 5: finished, turnaround 32
+  A pid 4: 25% done at tick 60
+  A pid 4: 50% done at tick 74
+  A pid 4: 75% done at tick 89
+  A pid 4: 100% done at tick 104
+  A pid 4: finished, turnaround 93
+
+completion order: 1. C (burst 6) 2. B (burst 25) 3. A (burst 60)

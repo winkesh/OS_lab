@@ -1,0 +1,32 @@
+$ make clean && make qemu-nox SCHED=MLFQ CPUS=1
+...
+$ mlfqtest
+[mlfq] tick 9: pid 2 used its 1-tick slice, queue 0 -> 1
+mlfqtest: 2 CPU-bound children (infinite loops) and 2 I/[mlfq] tick 10: pid 3 used its 1-tick slice, queue 0 -> 1
+O-bound children
+(tiny compute, then sleep(1), forever). Time slices: queue 0 = 1 tick,
+queue 1 = 2 ticks, queue 2 = 4 ticks. The parent samples every queue level.
+
+parent: pid 4 is CPU-bound
+parent: pid 5 is I/O-bound
+parent: pid 6 is CPU-bound
+[mlfq] tick 12: pid 3 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 13: pid 4 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 14: pid 6 used its 1-tick slice, queue 0 -> 1
+[mlfq] tick 16: pid 4 used its 2-tick slice, queue 1 -> 2
+[mlfq] tick 18: pid 6 used its 2-tick slice, queue 1 -> 2
+parent: pid 7 is I/O-bound
+
+tick   pid4(CPU) pid5(I/O) pid6(CPU) pid7(I/O) 
+34      queue 2     queue 0     queue 2     queue 0   
+50      queue 2     queue 0     queue 2     queue 0   
+66      queue 2     queue 0     queue 2     queue 0   
+82      queue 2     queue 0     queue 2     queue 0   
+98      queue 2     queue 0     queue 2     queue 0   
+114      queue 2     queue 0     queue 2     queue 0   
+130      queue 2     queue 0     queue 2     queue 0   
+146      queue 2     queue 0     queue 2     queue 0   
+162      queue 2     queue 0     queue 2     queue 0   
+178      queue 2     queue 0     queue 2     queue 0   
+
+result: CPU-bound children ended in queue 2, I/O-bound children in queue 0

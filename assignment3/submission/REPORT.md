@@ -45,7 +45,7 @@ New system calls: `set_priority` (22) and `set_burst` (23), wired through `sysca
 |---|:-:|:-:|:-:|:-:|:-:|
 | RR (baseline) | 63.6 | 1.0 | 61.0 | 1.5 | 43 |
 | FCFS | 85.6 | 51.6 | 92.5 | 59.7 | 132 |
-| Priority + aging | 47.6 | 15.6 | **46.0** | 12.7 | **36** |
+| Priority + aging | 47.6 | 16.0 | **45.7** | 12.7 | **36** |
 | SJF | **45.3** | 15.0 | 64.2 | 11.5 | 119 |
 
 **CPU-bound workload: SJF gives the best turnaround.** When every job needs the CPU continuously and the bursts are known, running the shortest first minimises average turnaround: each job waits only behind shorter ones. SJF provably gives the minimum average waiting time for a batch that arrives together. Here priority scheduling matches it (47.6) only because the priorities were set to follow job length. **FCFS is worst (85.6)** because of the convoy effect: the 60-tick job was created first, so the 10-tick job waits 92 ticks behind it. RR (63.6) sits in between: it avoids the convoy, but because time slices interleave every job, even the short job finishes late (29 vs 9 ticks) and the long one gains nothing.
