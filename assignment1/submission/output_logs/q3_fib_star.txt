@@ -1,0 +1,27 @@
+$ ./fib_star.sh
+Enter N: 4
+First 4 Fibonacci terms:
+0, 1, 1, 2
+Star pattern with 4 rows:
+*
+**
+***
+****
+$ ./fib_star.sh
+Enter N: 10
+First 10 Fibonacci terms:
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+Star pattern with 10 rows:
+*
+**
+***
+****
+*****
+******
+*******
+********
+*********
+**********
+$ ./fib_star.sh
+Enter N: -3
+Error: N must be a positive integer

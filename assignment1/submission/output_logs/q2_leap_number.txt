@@ -1,0 +1,21 @@
+$ ./leap_number.sh
+Enter a year: 2024
+2024 is a Leap Year
+Enter a number: 17
+17 is Odd
+17 is Positive
+$ ./leap_number.sh
+Enter a year: 1900
+1900 is not a Leap Year
+Enter a number: -8
+-8 is Even
+-8 is Negative
+$ ./leap_number.sh
+Enter a year: 2000
+2000 is a Leap Year
+Enter a number: 0
+0 is Even
+0 is Zero
+$ ./leap_number.sh
+Enter a year: 20x4
+Error: '20x4' is not a valid year

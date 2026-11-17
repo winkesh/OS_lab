@@ -1,0 +1,24 @@
+$ ./palindrome_prime.sh
+Enter a string or number: 131
+131 is a Palindrome
+131 is a Prime number
+$ ./palindrome_prime.sh
+Enter a string or number: 121
+121 is a Palindrome
+121 is not a Prime number
+$ ./palindrome_prime.sh
+Enter a string or number: 97
+97 is not a Palindrome
+97 is a Prime number
+$ ./palindrome_prime.sh
+Enter a string or number: madam
+madam is a Palindrome
+madam is not numeric, so the prime check is skipped
+$ ./palindrome_prime.sh
+Enter a string or number: hello
+hello is not a Palindrome
+hello is not numeric, so the prime check is skipped
+$ ./palindrome_prime.sh
+Enter a string or number: 1
+1 is a Palindrome
+1 is not a Prime number

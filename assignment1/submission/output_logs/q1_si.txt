@@ -1,0 +1,17 @@
+$ ./si.sh 10000 5 2
+Principal          = 10000
+Rate of Interest   = 5 %
+Time               = 2 years
+Simple Interest    = 1000
+Total Amount       = 11000
+$ ./si.sh 2500 7.5 3
+Principal          = 2500
+Rate of Interest   = 7.5 %
+Time               = 3 years
+Simple Interest    = 562.50
+Total Amount       = 3062.50
+$ ./si.sh 10000 5
+Usage: ./si.sh <principal> <rate> <time_in_years>
+Example: ./si.sh 10000 5 2
+$ ./si.sh 10000 abc 2
+Error: 'abc' is not a valid non-negative number
